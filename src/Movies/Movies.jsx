@@ -5,6 +5,7 @@ import {Route} from 'react-router-dom';
 import Movie from './Movie/Movie';
 import SearchBox from '../components/searchBox/searchBox';
 import Favourites from '../pages/Favourites/Favourites';
+import Pagination from '../pagination/pagination';
 
 const favourites = [];
 
@@ -13,6 +14,7 @@ class Movies extends React.Component{
         super(props);
         this.state = {
             movies:[],
+            totalResults: null,
             s:'',
             type: '',
             fav: []
@@ -25,7 +27,10 @@ class Movies extends React.Component{
         .then(res => res.json())
         .then(data => {
             this.setState({
-                movies: data.Search
+                movies: data.Search,
+                totalResults: data.totalResults
+            },()=>{
+                console.log(typeof(this.state.totalResults),'number hona chie')
             });
         })
     }
@@ -56,6 +61,17 @@ class Movies extends React.Component{
         });
     }
 
+    currentPageData = (page, event) => {
+        console.log(page,'pageNumber');
+
+        fetch(`http://www.omdbapi.com/?apikey=406f1bed&s=${this.state.s}&type=${this.state.type}&page=${`${page}`}`)
+        .then(res => res.json())
+        .then(data => {
+            this.setState({
+                movies: data.Search
+            });
+        })
+    }
 
     render(){
 
@@ -72,7 +88,10 @@ class Movies extends React.Component{
                                     setFav={this.setFav}
                                     fav={this.state.fav} 
                                     /> :''}
-                
+                <Pagination 
+                        totalResults={this.state.totalResults} 
+                        currentPageData={this.currentPageData}
+                    />
                 <Route path='/favourites' exact render={(props) => {
                     return <Favourites fav={this.state.fav} {...props}/>
                 }}/>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Favourites = props => {
-    console.log(props.fav,'favorites seee')
+    
     const {fav} = props;
 
     const filteredFav = fav.filter((eachFav,index) => {
