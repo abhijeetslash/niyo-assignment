@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import Movies from './Movies/Movies';
 import Favourites from './pages/Favourites/Favourites';
@@ -9,9 +9,9 @@ import './App.css';
 
 function App() {
   return (
+
     <div className="App">
-      <Navbar />
-      <Movies/>
+        <Movies />
     </div>
   );
 }

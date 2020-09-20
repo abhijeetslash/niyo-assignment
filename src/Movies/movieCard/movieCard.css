@@ -1,0 +1,41 @@
+.movie-item {
+    padding: 1rem;
+    box-sizing: border-box;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.movie-item div img {
+    height: 100%;
+    width: 100%;
+}
+
+.card {
+    background-color: white;
+    box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
+    display: flex;
+    border-radius: 7px;
+    overflow: hidden;
+    position: relative;
+    flex-direction: column;
+    width: 80%;
+    height: 350px;
+    
+  }
+
+.img-wrapper {
+    width: 100%;
+    height: 20%;
+}  
+ 
+.card-content {
+    text-align: center;
+}
+
+.title-style {
+    background-color: #cce0ff;
+    padding: 6px 0;
+    box-sizing: border-box;
+}

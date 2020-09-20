@@ -1,10 +1,12 @@
 import React from 'react';
 import MovieCard from '../movieCard/movieCard';
 
+import './Movie.css';
+
 const Movie = ({movies, setFav, favKey}) => {
    
     return (
-        <div>
+        <div className="cards">
             {movies.map((movie) => {
                 return (
                     <MovieCard 
@@ -13,6 +15,7 @@ const Movie = ({movies, setFav, favKey}) => {
                         Title={movie.Title}
                         Year={movie.Year}
                         Type={movie.Type}
+                        Poster={movie.Poster}
                         setFav={setFav}
                     />
                 )  

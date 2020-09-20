@@ -1,11 +1,13 @@
 import React from 'react';
 
-import {Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
 
 import Movie from './Movie/Movie';
 import SearchBox from '../components/searchBox/searchBox';
 import Favourites from '../pages/Favourites/Favourites';
 import Pagination from '../pagination/pagination';
+import MovieLayout from '../pages/movieLayout/movieLayout';
+import Navbar from '../components/Navbar/Navbar';
 
 const favourites = [];
 
@@ -16,7 +18,7 @@ class Movies extends React.Component{
             movies:[],
             totalResults: null,
             s:'',
-            type: '',
+            type: 'movie',
             fav: []
         }
     }
@@ -29,8 +31,6 @@ class Movies extends React.Component{
             this.setState({
                 movies: data.Search,
                 totalResults: data.totalResults
-            },()=>{
-                console.log(typeof(this.state.totalResults),'number hona chie')
             });
         })
     }
@@ -62,8 +62,6 @@ class Movies extends React.Component{
     }
 
     currentPageData = (page, event) => {
-        console.log(page,'pageNumber');
-
         fetch(`http://www.omdbapi.com/?apikey=406f1bed&s=${this.state.s}&type=${this.state.type}&page=${`${page}`}`)
         .then(res => res.json())
         .then(data => {
@@ -78,25 +76,32 @@ class Movies extends React.Component{
         const {movies} = this.state;
 
         return(
-            <div>
-                <SearchBox 
-                    typeSelector={this.typeSelector} 
-                    onChangeHandler={this.onChangeHandler}
-                    onSearchHandler={this.onSearchHandler}
-                />
-                {movies ? <Movie movies={this.state.movies} 
-                                    setFav={this.setFav}
-                                    fav={this.state.fav} 
-                                    /> :''}
-                <Pagination 
-                        totalResults={this.state.totalResults} 
-                        currentPageData={this.currentPageData}
-                    />
-                <Route path='/favourites' exact render={(props) => {
-                    return <Favourites fav={this.state.fav} {...props}/>
-                }}/>
-
-            </div>
+                <BrowserRouter>
+                    <Navbar />
+                    <Route path='/' exact render={
+                            props => {
+                                return (
+                                    <MovieLayout
+                                        typeSelector={this.typeSelector} 
+                                        onChangeHandler={this.onChangeHandler}
+                                        onSearchHandler={this.onSearchHandler}
+                                        movies={this.state.movies} 
+                                        setFav={this.setFav}
+                                        fav={this.state.fav}
+                                        totalResults={this.state.totalResults} 
+                                        currentPageData={this.currentPageData}
+                                        {...props}
+                                    />
+                                )
+                            }
+                        }/>
+                    <Route path='/favourites' render={(props) => {
+                            return <Favourites fav={this.state.fav}
+                                               genere={this.state.type}     
+                                                 {...props}
+                            />
+                        }}/> 
+                </BrowserRouter>
         )
     }
 }

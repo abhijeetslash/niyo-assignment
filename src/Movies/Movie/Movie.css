@@ -1,0 +1,8 @@
+
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-image: linear-gradient(to right, rgba(26, 117, 255, .8),rgb(153, 194, 255,.5));
+ 
+  }
